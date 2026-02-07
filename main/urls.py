@@ -15,7 +15,8 @@
 # ]
 
 from django.urls import path
-from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView 
+from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView
+ 
 
 urlpatterns = [
     path('tasklist/', TaskListCreateView.as_view()),

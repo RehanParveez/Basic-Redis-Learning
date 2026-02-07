@@ -1,6 +1,6 @@
 from celery import shared_task
 import time, random
-from .models import TaskLog
+from main.models import TaskLog
 
 @shared_task
 def practice_background_task():
