@@ -43,3 +43,19 @@ def practice_retry_log_task(self):
 
         # retrying safely after countdown of 5 seconds
         raise self.retry(exc=exc, countdown=5)
+    
+@shared_task(bind=True, max_retries=3)
+def calculate_task_result(self, number):
+    name = 'calculate_task_result'
+    try:
+        time.sleep(2)
+        result = {'input':number, 'output':number**2} #practice calculation
+        
+        # logging the result in the db
+        TaskLog.objects.create(name=name, status='success', message='the task is completed', result=result)
+        return result
+    
+    except Exception as exc:
+        TaskLog.objects.create(name=name, status='failed', message=str(exc), result=None)
+        raise self.retry(exc=exc, countdown=4)
+        

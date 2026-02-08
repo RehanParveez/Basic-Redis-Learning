@@ -13,6 +13,7 @@ class TaskLog(models.Model):
     name = models.CharField(max_length=70)
     status = models.CharField(max_length=20)
     message = models.TextField(blank=True, null=True)
+    result = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

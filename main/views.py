@@ -39,7 +39,8 @@ from main.serializers import TaskSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.views import View
 from django.http import JsonResponse
-from main.tasks import practice_background_task, practice_retry_task, practice_retry_log_task
+from main.tasks import practice_background_task, practice_retry_task, practice_retry_log_task, calculate_task_result
+# from celery.result import AsyncResult  # related to getcalculatetaskresultview
 
 
 # class TaskListApiView(APIView):
@@ -114,3 +115,22 @@ class TestRetryLogTaskView(View):
     def get(self, request, *args, **kwargs):
         practice_retry_log_task.delay()
         return JsonResponse({"status": "the retry task with the db logging has been sent to the celery"})
+    
+class TestCalculateTaskView(View):
+    def get(self, request, *args, **kwargs):
+        number = int(request.GET.get('number', 5))
+        task = calculate_task_result.delay(number)
+        return JsonResponse({'status':'task sent', 'task_id': task.id})
+   
+   
+# not required
+ 
+# class GetCalculateTaskResultView(View):
+#     def get(self, request, *args, **kwargs):
+#         task_id = request.GET.get('task_id')
+#         task_result = AsyncResult(task_id)
+#         if task_result.ready():
+#             return JsonResponse({'status':'done', 'result':task_result.result})
+#         return JsonResponse({'status':'pending'})
+        
+    

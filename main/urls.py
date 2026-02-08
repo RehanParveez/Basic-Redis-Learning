@@ -15,7 +15,8 @@
 # ]
 
 from django.urls import path
-from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView
+from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView, TestCalculateTaskView
+# GetCalculateTaskResultView
  
 
 urlpatterns = [
@@ -25,6 +26,10 @@ urlpatterns = [
     path('testcelery/', TestCeleryView.as_view()),
     path('testretrycelery/', TestRetryTaskView.as_view()),
     path('testretrylogcelery/', TestRetryLogTaskView.as_view()),
+    path('testcalculate/', TestCalculateTaskView.as_view()),
+    
+    # not needed for now
+    # path('getcalculate/', GetCalculateTaskResultView.as_view()),
 ]
 
 
