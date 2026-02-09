@@ -1,9 +1,11 @@
+version: "3.9"
+
 services:
   redis:
     image: redis:7
     ports:
       - "6379:6379"
-    # adding this to persist Redis data
+    # persists redis data
     volumes:
       - redis_data:/data
 
@@ -34,6 +36,18 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
 
-# defining the named volume
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    command: celery -A DjangoRedis beat -l info
+    depends_on:
+      - redis
+      - django
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# setting volumes
 volumes:
   redis_data:

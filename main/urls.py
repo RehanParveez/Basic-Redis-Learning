@@ -14,23 +14,36 @@
 #     path('tasklist/', TaskListApiView.as_view()),
 # ]
 
-from django.urls import path
-from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView, TestCalculateTaskView
-# GetCalculateTaskResultView
+# from django.urls import path
+# from main.views import TaskListCreateView, TaskDetailView, TestCeleryView, TestRetryTaskView, TestRetryLogTaskView, TestCalculateTaskView
+# # GetCalculateTaskResultView
  
 
-urlpatterns = [
-    path('tasklist/', TaskListCreateView.as_view()),
-    path('taskdetail/<int:pk>/', TaskDetailView.as_view()),
-    # celery testing url
-    path('testcelery/', TestCeleryView.as_view()),
-    path('testretrycelery/', TestRetryTaskView.as_view()),
-    path('testretrylogcelery/', TestRetryLogTaskView.as_view()),
-    path('testcalculate/', TestCalculateTaskView.as_view()),
+# urlpatterns = [
+#     path('tasklist/', TaskListCreateView.as_view()),
+#     path('taskdetail/<int:pk>/', TaskDetailView.as_view()),
+#     # celery testing url
+#     path('testcelery/', TestCeleryView.as_view()),
+#     path('testretrycelery/', TestRetryTaskView.as_view()),
+#     path('testretrylogcelery/', TestRetryLogTaskView.as_view()),
+#     path('testcalculate/', TestCalculateTaskView.as_view()),
     
-    # not needed for now
-    # path('getcalculate/', GetCalculateTaskResultView.as_view()),
+#     # not needed for now
+#     # path('getcalculate/', GetCalculateTaskResultView.as_view()),
+# ]
+
+
+# celery beat practice related urls
+
+from django.urls import path
+from main.views import HeartbeatView, LastBeatTimestampView, ClearTaskListView
+
+urlpatterns = [
+    path('heartbeat/', HeartbeatView.as_view()),
+    path('lastbeat/', LastBeatTimestampView.as_view()),
+    path('cleartask/', ClearTaskListView.as_view()),
 ]
+
 
 
 
